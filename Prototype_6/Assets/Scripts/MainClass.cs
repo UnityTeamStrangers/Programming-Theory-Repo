@@ -3,43 +3,56 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Базовый класс персонажа
+/// Базовый класс персонажа, который реализует интерфейс
 /// </summary>
-public class MainClass : MonoBehaviour, myInterface
+public class MainClass : MonoBehaviour, IMyInterface
 {
-    public static string nameClass = "Player_1";
-    int HP;
-    public int HP_Max;
+    protected string nameClass = "Player_1";
+    int hP;
+    int hP_Max;
+
     public int pr_HP
     {
         get
         {
-            if (HP <= 0) HP = 0;
-            else if (HP >= HP_Max) HP = HP_Max;
-            return HP;
+            if (hP <= 0) hP = 0;
+            else if (hP >= hP_Max) hP = hP_Max;
+            return hP;
         }
         set
         {
-            HP += value;
-            if (HP >= HP_Max) HP = HP_Max;
+            hP += value; //(скорее всего здесь ошибка (множителя на 2) не проверял)
+            if (hP >= hP_Max) hP = hP_Max;
         }
-    }
-    public static int DMG;
-    public static int END;
-    public int point;
+    } 
+    public int pr_HP_Max { get { return hP_Max; } }
+    public void Set_HP_Max(int value) { hP_Max += value; }
 
-    public virtual void DMG_Plus() { if (point != 0) { DMG++; point--; } }
-    public virtual void END_Plus() { if (point != 0) { END++; point--; } }
+    protected int Damage;
+    protected int Endurance;
+    
+    public string GetName() { return nameClass; }
+    public int GetDamage() { return Damage; }
+    public int GetEndurance() { return Endurance; }
 
-    public virtual void set(int hp,int dmg,int end)
+    public static int point; 
+
+    public virtual void DMG_Plus() { if (point != 0) { Damage++;  point--; } }
+    public virtual void END_Plus() { if (point != 0) { Endurance++; point--; } }
+
+    public virtual void SetParams(int hp,int dmg,int end)
     {
-        HP_Max = hp;
-        HP = HP_Max;
-        DMG = dmg;
-        END = end;
+        hP = hP_Max = hp;
+        Damage = dmg;
+        Endurance = end;
     }
+
     void Awake()
     {
-        set(100, 10, 10);  
+        SetParams(100, 10, 10);
+    }
+    void Start()
+    {
+        point = 10;
     }
 }

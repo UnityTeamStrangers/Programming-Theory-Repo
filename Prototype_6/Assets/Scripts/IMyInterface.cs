@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface myInterface
+
+public interface IMyInterface
 {
-    public void set(int hp, int dmg, int end);
+    public void SetParams(int hp, int dmg, int end);
 }

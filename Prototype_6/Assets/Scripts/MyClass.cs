@@ -7,52 +7,28 @@ using UnityEngine;
 /// </summary>
 public class MyClass : MainClass
 {
-    new public static string nameClass = "Player_2";
-    int HP_2;
-    public int HP_Max_2;
-    new public int pr_HP
-    {
-        get
-        {
-            if (HP_2 <= 0) HP_2 = 0;
-            else if (HP_2 >= HP_Max_2) HP_2 = HP_Max_2;
-            return HP_2;
-        }
-        set
-        {
-            HP_2 += value;
-            if (HP_2 >= HP_Max_2) HP_2 = HP_Max_2;
-        }
-    }
-    new public static int DMG;
-    new public static int END;
-
     public void HP_Plus()
     {
         if (point != 0)
         {
-            HP_Max_2+=10;
-            base.HP_Max += 10;
+            Set_HP_Max(10);    
             point--;
-        }        
+        }
     }
-    public override void DMG_Plus()
+    public override void DMG_Plus() { Damage++; base.DMG_Plus(); }
+    public override void END_Plus() { if (point != 0) { Endurance+=2; point--; } }
+    public override void SetParams(int hp, int dmg, int end)
     {
-        if (point != 0) { DMG++; point--; }
+        Set_HP_Max(hp);
+        pr_HP = hp;
+        Damage = dmg;
+        Endurance = end;
     }
-    public override void END_Plus()
-    {
-        if (point != 0) { END++; point--; }
-    }
-    public override void set(int hp, int dmg, int end)
-    {
-        HP_Max_2 = hp;
-        HP_2 = HP_Max_2;
-        DMG = dmg;
-        END = end;
-    }
+    public void SetNameClass(string name) { nameClass = name; }
+
     void Awake()
     {
-        set(200, 20, 20);
+        SetNameClass("Player_2");
+        SetParams(200, 20, 20);
     }
 }
