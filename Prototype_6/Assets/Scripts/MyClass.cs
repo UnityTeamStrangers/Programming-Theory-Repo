@@ -32,6 +32,6 @@ public class MyClass : MainClass
     void Awake()
     {
         SetNameClass("Player_2");
-        SetParams(400, 0, 40);
+        SetParams(400, 20, 40);
     }
 }
